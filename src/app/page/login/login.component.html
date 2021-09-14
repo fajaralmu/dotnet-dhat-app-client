@@ -18,6 +18,7 @@
             </app-form-group>
             <app-form-group *ngIf="!loading" label="">
                 <input type="submit" class="btn btn-success" value="Login" />
+                <a [routerLink]="['/register']" class="btn btn-link">Register</a> 
             </app-form-group>
             <app-form-group *ngIf="loading" label="">
                 <i>Please wait..</i>

@@ -43,11 +43,6 @@ export class UserService {
   * @param password 
   */
   public login(email:string, password:string): Promise<boolean> {
-    const formData:Record<string, string> = {
-      email:email,
-      password:password
-    }
-    // const queryString = new URLSearchParams(formData ).toString();
 
     return new Promise<boolean>((res, rej)=> {
       const url = getHost()+"api/auth/login";//?"+queryString;
@@ -58,6 +53,25 @@ export class UserService {
       
       .subscribe((resp:HttpResponse<WebResponse>)=>{
         this.handleSuccessLogin(resp);
+        res(true);
+        sub.unsubscribe();
+      }, (err) => {
+        res(false);
+        sub.unsubscribe();
+      });
+    });
+  
+  }
+  public register(name:string, email:string, password:string): Promise<boolean> {
+    return new Promise<boolean>((res, rej)=> {
+      const url = getHost()+"api/user/register";//?"+queryString;
+      const body = new HttpParams()
+      .set('name', name)
+      .set('email', email)
+      .set('password', password);
+      const sub = this.http.post<WebResponse >(url,body.toString(),{observe: 'response', ...this.loginHeader})
+      
+      .subscribe((resp:HttpResponse<WebResponse>)=>{
         res(true);
         sub.unsubscribe();
       }, (err) => {

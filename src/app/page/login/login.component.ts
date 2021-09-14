@@ -15,7 +15,10 @@ export class LoginComponent implements OnInit {
   loginSuccess:boolean | undefined;
   loading:boolean = false;
 
-  constructor(private userService:UserService, private router:Router) { }
+  constructor(
+    private userService:UserService, 
+    private router:Router
+    ) { }
 
   ngOnInit(): void {
     this.checkSession();

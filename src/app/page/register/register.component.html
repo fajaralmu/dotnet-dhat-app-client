@@ -1,1 +1,31 @@
-<p>register works!</p>
+
+   
+    <div *ngIf="registerSuccess === false" class="text-center alert alert-danger">
+        <p>register failed. Please try again</p>
+    </div>
+    <div *ngIf="registerSuccess === true" class="text-center alert alert-primary">
+        <p>register success. Redirecting to login page</p>
+    </div>
+
+<app-card *ngIf="registerSuccess !== true" header="Register" width="80vw">
+    <div  class="container-fluid">
+        <form  ngNativeValidate (submit) ="register()" style="padding-top: 20px" > 
+            <app-form-group label="Username">
+                <input autocomplete="off" class="form-control" type="name" placeholder="name" required [(ngModel)]="name" name="name"/>
+            </app-form-group>
+            <app-form-group label="Email">
+                <input autocomplete="off" class="form-control" type="email" placeholder="email" required [(ngModel)]="email" name="email"/>
+            </app-form-group>
+            <app-form-group label="Password">
+                <input autocomplete="off" class="form-control" type="password" placeholder="password" required [(ngModel)]="password" name="password"/>
+            </app-form-group>
+            <app-form-group *ngIf="!loading" label="">
+                <input type="submit" class="btn btn-success" value="Register" />
+            </app-form-group>
+            <app-form-group *ngIf="loading" label="">
+                <i>Please wait..</i>
+            </app-form-group>
+        </form>
+    </div>
+</app-card> 
+
