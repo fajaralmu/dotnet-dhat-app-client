@@ -6,6 +6,7 @@ import { AlertService } from 'src/app/service/alert.service';
 import { AuthService } from 'src/app/service/auth.service';
 import { ChatService } from 'src/app/service/chat.service';
 import { UserService } from 'src/app/service/user.service';
+import { getHost } from 'src/app/utils/rest';
 
 @Component({
   selector: 'div[app-chat-partner]',
@@ -18,7 +19,7 @@ export class ChatPartnerComponent implements OnInit, OnChanges {
   partner: User = new User();
   chatMessages: ChatMessage[] = [];
   chatMessage: ChatMessage = new ChatMessage();
-
+  socket: WebSocket | undefined;
   constructor(
     private chatService: ChatService,
     private authService: AuthService,
@@ -38,12 +39,15 @@ export class ChatPartnerComponent implements OnInit, OnChanges {
       .then(ok => {
         if (ok) {
           this.chatService.delete(chatMessage.id)
-          .then(this.handleSuccessDeleteChat)
+            .then(this.handleSuccessDeleteChat)
         }
       })
   }
   send = () => {
     this.chatMessage.toUserID = this.partner.id;
+    if (this.socket) {
+      this.socket.send(this.chatMessage.body);
+    }
     this.chatService.sendChat(this.chatMessage)
       .then(this.handleSuccessSendChat).catch((e: WebResponse) => {
         this.alert.showInfo(e.message, "Error");
@@ -66,6 +70,29 @@ export class ChatPartnerComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     console.debug("partner: ", this.partner);
+    this.initWebsocket();
+  }
+
+  initWebsocket = () => {
+    try {
+      this.socket = new WebSocket("ws://localhost:5000/ws");
+      this.socket.addEventListener('open', (event)  => {
+        if (!this.socket) return;
+        this.socket.send('Websocket opened!');
+        this.socket.send(JSON.stringify(
+          {
+            "command": "subscribe",
+            "identifier":`{"channel":"chat${this.userId}"}`
+          }))
+          this.socket.send('Websocket opened #2!');
+      });
+      this.socket.onmessage = (event:MessageEvent) => {
+        console.log('Message from server ', event.data);
+      }
+      
+    } catch (e) {
+      console.debug("Error ws: ", e);
+    }
   }
 
   loadDirectChat = () => {
