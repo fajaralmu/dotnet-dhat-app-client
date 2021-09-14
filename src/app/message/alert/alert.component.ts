@@ -9,6 +9,7 @@ import { doItLater } from './../../utils/events';
 })
 export class AlertComponent implements OnInit, AfterViewInit {
   @Input() message: string = 'Alert !';
+  @Input() title: string = 'Information';
   @Input() confirmAlert: boolean=false;
   @Output() yesClicked: EventEmitter<any>  = new EventEmitter ();
   @Output() noClicked: EventEmitter<any>  = new EventEmitter ();

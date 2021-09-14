@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from './../../service/user.service';
+import { AuthService } from './../../service/auth.service';
 import { Router } from '@angular/router';
 import { doItLater } from './../../utils/events';
 
@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   loading:boolean = false;
 
   constructor(
-    private userService:UserService, 
+    private authService:AuthService, 
     private router:Router
     ) { }
 
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     this.checkSession();
   }
   private checkSession = () => {
-    if (this.userService.validateLoggedUser()) {
+    if (this.authService.validateLoggedUser()) {
       this.router.navigateByUrl("/dashboard");
     }
   }
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
   login = (): void => {
     this.loading = true;
     this.loginSuccess = undefined;
-    this.userService.login(this.email, this.password)
+    this.authService.login(this.email, this.password)
       .then(this.handleResponse);
   }
   handleResponse = (success:boolean) => {

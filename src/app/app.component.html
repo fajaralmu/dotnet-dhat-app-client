@@ -36,7 +36,7 @@
 
 <div class="content" role="main">
 
-  <app-alert *ngIf="alert.showAlert" [confirmAlert]="alert.confirmAlert" (noClicked)="alert.alertNoCallback()" (yesClicked)="alert.alertYesCallback()" message="{{alert.body}}" ></app-alert>
+  <app-alert *ngIf="alert.showAlert" [title]="alert.alertTitle" [confirmAlert]="alert.confirmAlert" (noClicked)="alert.alertNoCallback()" (yesClicked)="alert.alertYesCallback()" message="{{alert.body}}" ></app-alert>
   
   <div *ngIf="initialLoading || initialLoadingSuccess === undefined">
     <div *ngIf="initialLoading && initialLoadingSuccess === undefined " class="alert alert-warning">

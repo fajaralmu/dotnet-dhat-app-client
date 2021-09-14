@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { UserService } from './service/user.service';
+import { AuthService } from './service/auth.service';
 import WebResponse  from './model/web-response';
 import { Router } from '@angular/router';
 import { AlertService } from './service/alert.service';
@@ -20,7 +20,7 @@ export class AppComponent implements OnInit, AfterViewInit{
   
   headerContent: string = "Welcome";
 
-  constructor(private userService:UserService, public loading:LoadingService, 
+  constructor(private authService:AuthService, public loading:LoadingService, 
     
     public alert:AlertService){
 
@@ -35,7 +35,7 @@ export class AppComponent implements OnInit, AfterViewInit{
     this.initialLoadingSuccess = undefined;
     this.initialLoadingCount = 1;
     this.initialLoading = true;
-    const sub:Subscription = this.userService.requestId().subscribe(
+    const sub:Subscription = this.authService.requestId().subscribe(
       (resp)  => this.initialLoadingOnSuccess(resp, sub),
       (err)   => this.initialLoadingOnFailed(err, sub));
   }
@@ -43,9 +43,9 @@ export class AppComponent implements OnInit, AfterViewInit{
   initialLoadingOnSuccess = (response:WebResponse,sub: Subscription) => {
     this.initialLoading = false;
     this.initialLoadingSuccess = true;
-    this.userService.handleInitialLoading(response);
-    if (this.userService.profile) {
-      this.headerContent = this.userService.profile.name;
+    this.authService.handleInitialLoading(response);
+    if (this.authService.profile) {
+      this.headerContent = this.authService.profile.name;
     }
     sub.unsubscribe();
      
@@ -58,7 +58,7 @@ export class AppComponent implements OnInit, AfterViewInit{
       _sub.unsubscribe();
       return;
     }
-    const sub:Subscription = this.userService.retryRequestId().subscribe(
+    const sub:Subscription = this.authService.retryRequestId().subscribe(
       (resp)  => this.initialLoadingOnSuccess(resp, sub),
       (err)   => this.initialLoadingOnFailed(err, sub));
     console.error(err.error);
@@ -75,9 +75,9 @@ export class AppComponent implements OnInit, AfterViewInit{
   }
 
   private doLogout() {
-    this.userService.logout().then(success=>{
+    this.authService.logout().then(success=>{
       if (success) {
-        this.userService.validateLoggedUser();
+        this.authService.validateLoggedUser();
       } else {
         this.alert.showInfo("Error logout");
       }
@@ -85,7 +85,7 @@ export class AppComponent implements OnInit, AfterViewInit{
   }
 
   loggedUser = () => {
-    return this.userService.user;
+    return this.authService.user;
   }
 
   

@@ -1,1 +1,38 @@
-<p>chat-direct works!</p>
+<div class=" bg-light row" style="width: 90vw; padding-bottom: 30px;">
+    <h2 class="text-center col-12">Direct Message</h2>
+    <div class="col-4">
+        <app-card style="padding: 20px;" header="Send To Partner">
+            <form style="margin: 20px" ngNativeValidate (submit)="send()">
+                <app-form-group label="UserID">
+                    <input (keyup)="readUser()" autocomplete="off" class="form-control" type="number"
+                        placeholder="user id" required [(ngModel)]="chatMessage.toUserID" name="toUserID" />
+                </app-form-group>
+                <app-form-group label="User">
+                    <p *ngIf="chatMessage.toUser">{{chatMessage.toUser.name}}</p>
+                    <p *ngIf="!chatMessage.toUser">To user not found</p>
+                </app-form-group>
+                <app-form-group label="Body">
+                    <input autocomplete="off" class="form-control" type="name" placeholder="body" required
+                        [(ngModel)]="chatMessage.body" name="body" />
+                </app-form-group>
+                <app-form-group *ngIf="!loading && chatMessage.toUser" label="">
+                    <input type="submit" class="btn btn-success" value="Send" />
+                </app-form-group>
+                <app-form-group *ngIf="loading" label="">
+                    <i>Please wait..</i>
+                </app-form-group>
+            </form>
+        </app-card>
+        <div>
+            <h4>Chat Friends</h4>
+            <div class="list-group">
+                <button *ngFor="let partner of partners" (click)="selectPartner(partner)" class="list-group-item list-group-item-action" >
+                    {{partner.name}}
+                </button>
+            </div>
+        </div>
+    </div>
+    <div app-chat-partner  *ngIf="selectedPartner" [partner]="selectedPartner" class="col-8">
+
+    </div>
+</div>

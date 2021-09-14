@@ -14,6 +14,7 @@ import { FormGroupComponent } from './forms/form-group/form-group.component';
 import { CardComponent } from './container/card/card.component';
 import { ChatDirectComponent } from './page/chat-direct/chat-direct.component';
 import { ProfileComponent } from './page/profile/profile.component';
+import { ChatPartnerComponent } from './page/chat-direct/chat-partner/chat-partner.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ProfileComponent } from './page/profile/profile.component';
     FormGroupComponent,
     CardComponent,
     ChatDirectComponent,
-    ProfileComponent
+    ProfileComponent,
+    ChatPartnerComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import User from 'src/app/model/user';
+import { AuthService } from 'src/app/service/auth.service';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
@@ -9,12 +11,19 @@ import { UserService } from 'src/app/service/user.service';
 export class ProfileComponent implements OnInit {
 
   constructor(private userService:UserService) { }
-
-  get user() {
-    return this.userService.user;
-  }
+  
+  user:User|undefined;
 
   ngOnInit(): void {
+    this.loadProfile();
+  }
+
+  loadProfile = ()=>{
+    if (this.user != undefined) return;
+    this.userService.loadProfile()
+                    .then(response=>{
+                        this.user = response.result as User;
+                    });
   }
 
 }

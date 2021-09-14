@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/service/user.service';
+import { AuthService } from 'src/app/service/auth.service';
 import { doItLater } from 'src/app/utils/events';
 
 @Component({
@@ -17,7 +17,7 @@ export class RegisterComponent implements OnInit {
   loading:boolean = false;
 
   constructor(
-    private userService:UserService, 
+    private authService:AuthService, 
     private router:Router
     ) { }
 
@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
   register = (): void => {
     this.loading = true;
     this.registerSuccess = undefined;
-    this.userService.register(this.name, this.email, this.password)
+    this.authService.register(this.name, this.email, this.password)
       .then(this.handleResponse);
   }
   handleResponse = (success:boolean) => {

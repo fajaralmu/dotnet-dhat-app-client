@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from './../../service/user.service';
+import { AuthService } from './../../service/auth.service';
 import User from './../../model/user';
 
 @Component({
@@ -23,14 +23,14 @@ export class DashboardComponent implements OnInit {
      
   ]
 
-  constructor(private userService: UserService) { }
+  constructor(private authService: AuthService) { }
   
   public get user() :User|undefined {
-    return this.userService.user;
+    return this.authService.user;
   }
 
   ngOnInit(): void {
-    this.userService.validateLoggedUser();
+    this.authService.validateLoggedUser();
   }
 
 }
