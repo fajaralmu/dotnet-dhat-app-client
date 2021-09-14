@@ -78,16 +78,21 @@ export class ChatPartnerComponent implements OnInit, OnChanges {
       this.socket = new WebSocket("ws://localhost:5000/ws");
       this.socket.addEventListener('open', (event)  => {
         if (!this.socket) return;
-        this.socket.send('Websocket opened!');
+        
         this.socket.send(JSON.stringify(
-          {
-            "command": "subscribe",
-            "identifier":`{"channel":"chat${this.userId}"}`
-          }))
-          this.socket.send('Websocket opened #2!');
+        {
+          "command": "subscribe",
+          "identifier":`{"channels":["chat/${this.userId}"]}`
+        })) 
       });
+      this.socket.onerror = (e) => {
+        console.error("WS error: ", e);
+      }
+      this.socket.onclose = (e) => {
+        console.log("WS close: ",e);
+      }
       this.socket.onmessage = (event:MessageEvent) => {
-        console.log('Message from server ', event.data);
+        console.log('Message from server ', JSON.parse(event.data));
       }
       
     } catch (e) {
