@@ -3,7 +3,7 @@
     <div class="row">
         <div *ngFor="let menu of menus" class="col-md-4 text-center">
             <a routerLink="{{menu.link}}">
-                <h1><i class="fas fa-folder"></i></h1>
+                <h1><i class="{{menu.icon}}"></i></h1>
             </a>
             <p>{{menu.label}}</p>
         </div>

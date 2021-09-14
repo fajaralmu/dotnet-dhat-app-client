@@ -20,13 +20,13 @@
   <span>{{headerContent}}</span>
   </a>
     <div class="spacer"></div>
-    <a routerLink="/dashboard" style="margin-right:20px;">
+    <a *ngIf="(loggedUser() !== undefined)" routerLink="/dashboard" style="margin-right:20px;">
       <h3 class="text-white"><i class="fas fa-home"></i></h3>
     </a>
     <a *ngIf="(loggedUser() === undefined)" routerLink="/login" style="margin-right: 20px;">
       <h3 class="text-white"><i class="fas fa-sign-in-alt"></i></h3>
     </a>
-    <a *ngIf="(loggedUser() !== undefined)" routerLink="/dashboard" style="margin-right: 20px;">
+    <a *ngIf="(loggedUser() !== undefined)" routerLink="/profile" style="margin-right: 20px;">
       <h3 class="text-white"><i class="fas fa-user-circle"></i></h3>
     </a>
     <a *ngIf="(loggedUser() !== undefined)" (click)="logout()" style="margin-right: 10px;">

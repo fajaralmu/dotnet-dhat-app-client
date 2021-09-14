@@ -1,0 +1,17 @@
+<div class="container-fluid  ">
+    <h2 class="text-center">Profile</h2>
+    <table class="table table-borderless " *ngIf="user">
+        <tr>
+            <td>Name</td>
+            <td> {{user.name}} </td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td> {{user.email}} </td>
+        </tr>
+        <tr>
+            <td>Date Join</td>
+            <td> {{user.createdDate}} </td>
+        </tr>
+    </table>
+</div>

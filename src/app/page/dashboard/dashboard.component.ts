@@ -11,21 +11,16 @@ export class DashboardComponent implements OnInit {
 
   menus:Record<string, string>[] = [
     {
-      label:'Transaction',
-      link:'/transaction'
+      label:'Chat Room',
+      link:'/chat-room',
+      icon: 'fas fa-comments'
     },
     {
-      label:'Management',
-      link:'/management'
+      label:'Direct Message',
+      link:'/chat-direct',
+      icon: 'fas fa-comment-dots'
     },
-    {
-      label:'Add Stock',
-      link:'/supply'
-    },
-    {
-      label:'Update Stock',
-      link:'/updatestock'
-    },
+     
   ]
 
   constructor(private userService: UserService) { }

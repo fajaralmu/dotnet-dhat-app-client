@@ -28,7 +28,7 @@ export class UserService {
 
   public updateToken = (resp: HttpResponse<any>) => {
     const token = resp.headers.get("access-token");
-    console.debug("token: ", token);
+    // console.debug("token: ", token);
     if (null != token) {
       setLoginKeyCookie(token);
       // console.debug("WILL update access-token");

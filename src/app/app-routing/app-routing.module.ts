@@ -4,7 +4,8 @@ import { LoginComponent } from '../page/login/login.component';
 import { DashboardComponent } from '../page/dashboard/dashboard.component';
 import { ChatRoomComponent } from '../page/chat-room/chat-room.component';
 import { RegisterComponent } from '../page/register/register.component';
-
+import { ChatDirectComponent } from '../page/chat-direct/chat-direct.component';
+import { ProfileComponent } from '../page/profile/profile.component';
 
 
 const routes: Routes = [
@@ -13,8 +14,10 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   // { path: 'index', component: HomeComponent },
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'profile', component: ProfileComponent },
   // { path: 'management', component: ManagementComponent },
-  { path: 'chat-room/:roomId', component: ChatRoomComponent },
+  { path: 'chat-room', component: ChatRoomComponent },
+  { path: 'chat-direct', component: ChatDirectComponent },
 
  
 ];
