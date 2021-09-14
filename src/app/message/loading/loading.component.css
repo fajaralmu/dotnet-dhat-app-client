@@ -1,0 +1,10 @@
+.loading {
+    width: 80vw;
+    text-align: center;
+    position: fixed;
+    margin: auto;
+    left: 10vw;
+    font-weight: bold;
+    z-index: 100;
+    
+}
