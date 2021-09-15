@@ -155,7 +155,7 @@ export class AuthService {
       this.loggedUser = response.user;
     }
     this.applicationProfile = Object.assign(new ApplicationProfile(), response.result);
-    setRequestId(this.applicationProfile?.requestId);
+    setRequestId(this.applicationProfile?.requestID);
   }
 
 

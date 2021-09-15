@@ -127,7 +127,7 @@ export class ChatPartnerComponent implements OnInit, OnChanges, OnDestroy {
         let el: HTMLDivElement = this.chatScrollRef.nativeElement;
         el.scrollTop = el.scrollHeight;
       }
-    }, 500);
+    }, 100);
   }
 
   handleWebsocketMessage(response: WebSocketMessage) {
