@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/service/auth.service';
 import { UserService } from 'src/app/service/user.service';
 import { AlertService } from 'src/app/service/alert.service';
 import User from 'src/app/model/user';
-import WebResponse from 'src/app/model/web-response';
+import WebResponse from 'src/app/dto/web-response';
 
 @Component({
   selector: 'app-chat-direct',

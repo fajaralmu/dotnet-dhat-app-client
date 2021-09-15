@@ -1,7 +1,7 @@
  
 import { Injectable } from '@angular/core'; 
 import { commonHeaders, getHost, setLoginKeyCookie, setRequestId } from '../utils/rest'; 
-import WebResponse from '../model/web-response';
+import WebResponse from '../dto/web-response';
 import { AjaxService } from './ajax.service';
 
 

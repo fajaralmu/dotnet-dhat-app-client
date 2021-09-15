@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AuthService } from './service/auth.service';
-import WebResponse  from './model/web-response';
+import WebResponse  from './dto/web-response';
 import { Router } from '@angular/router';
 import { AlertService } from './service/alert.service';
 import { LoadingService } from './service/loading.service';

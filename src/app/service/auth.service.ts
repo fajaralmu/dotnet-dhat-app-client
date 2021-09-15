@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import ApplicationProfile from '../model/application-profile';
 import User from '../model/user';
-import WebResponse from '../model/web-response';
+import WebResponse from '../dto/web-response';
 import { commonHeaders, getHost, setLoginKeyCookie, setRequestId } from '../utils/rest';
 
 const FORM_URL_ENCODED:string = 'application/x-www-form-urlencoded';

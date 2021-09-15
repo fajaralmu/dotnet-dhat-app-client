@@ -1,19 +1,21 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import ChatMessage from 'src/app/model/chat-message';
 import User from 'src/app/model/user';
-import WebResponse from 'src/app/model/web-response';
+import WebResponse from 'src/app/dto/web-response';
 import { AlertService } from 'src/app/service/alert.service';
 import { AuthService } from 'src/app/service/auth.service';
 import { ChatService } from 'src/app/service/chat.service';
 import { UserService } from 'src/app/service/user.service';
 import { getHost } from 'src/app/utils/rest';
+import WebSocketMessage from 'src/app/dto/websocket-message';
 
 @Component({
   selector: 'div[app-chat-partner]',
   templateUrl: './chat-partner.component.html',
   styleUrls: ['./chat-partner.component.css']
 })
-export class ChatPartnerComponent implements OnInit, OnChanges {
+export class ChatPartnerComponent implements OnInit, OnChanges, OnDestroy {
+  
 
   @Input()
   partner: User = new User();
@@ -25,6 +27,15 @@ export class ChatPartnerComponent implements OnInit, OnChanges {
     private authService: AuthService,
     private alert: AlertService
   ) { }
+  ngOnInit(): void {
+    console.debug("partner: ", this.partner);
+    this.initWebsocket();
+  }
+  ngOnDestroy(): void {
+    if (this.socket) {
+      this.socket.close();
+    }
+  }
   get userId() {
     return this.authService.user?.id;
   }
@@ -68,31 +79,31 @@ export class ChatPartnerComponent implements OnInit, OnChanges {
     this.chatMessages.push(response.result);
   }
 
-  ngOnInit(): void {
-    console.debug("partner: ", this.partner);
-    this.initWebsocket();
-  }
+  
 
   initWebsocket = () => {
     try {
-      this.socket = new WebSocket("ws://localhost:5000/ws");
-      this.socket.addEventListener('open', (event)  => {
+      const topics = [`chat/${this.userId}`];
+      this.socket = new WebSocket(`ws://localhost:5000/ws?topics=${topics.join(',')}`);
+      this.socket.onopen = (event)  => {
         if (!this.socket) return;
-        
-        this.socket.send(JSON.stringify(
-        {
-          "command": "subscribe",
-          "identifier":`{"channels":["chat/${this.userId}"]}`
-        })) 
-      });
-      this.socket.onerror = (e) => {
-        console.error("WS error: ", e);
+        this.socket.send("websocket has been initialized");
+        // this.socket.send(JSON.stringify(
+        // {
+        //   "command": "subscribe",
+        //   "identifier":`{"channels":["chat/${this.userId}"]}`
+        // })) 
       }
-      this.socket.onclose = (e) => {
-        console.log("WS close: ",e);
-      }
+      this.socket.onerror = (e) => { console.error("WS error: ", e); }
+      this.socket.onclose = (e) => { console.log("WS close: ",e); }
       this.socket.onmessage = (event:MessageEvent) => {
-        console.log('Message from server ', JSON.parse(event.data));
+        try {
+          let json = JSON.parse(event.data);
+          this.handleWebsocketMessage(Object.assign(new WebSocketMessage(), json));
+        } catch (error) {
+          console.log('Message from server ', (event.data));
+        }
+       
       }
       
     } catch (e) {
@@ -107,6 +118,17 @@ export class ChatPartnerComponent implements OnInit, OnChanges {
 
   handleSuccessLoadDirectChat = (response: WebResponse) => {
     this.chatMessages = response.result;
+  }
+
+  handleWebsocketMessage(response: WebSocketMessage) {
+    switch (response.topic) {
+      case `chat/${this.userId}`:
+        this.chatMessages.push(Object.assign( new ChatMessage(), response.data));
+        break;
+    
+      default:
+        break;
+    }
   }
 
 }

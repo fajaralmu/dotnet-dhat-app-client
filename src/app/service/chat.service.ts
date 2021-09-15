@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import ChatMessage from '../model/chat-message';
-import WebResponse from '../model/web-response';
+import WebResponse from '../dto/web-response';
 import { getHost } from '../utils/rest';
 import { AjaxService } from './ajax.service';
 
