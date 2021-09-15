@@ -1,6 +1,6 @@
-<div id="partner-chat" style="height: 100%; padding: 20px; ">
+<div id="partner-chat" style="height: 80vh; padding: 20px; ">
     <h3 class=""><i class="far fa-user"></i> {{partner.name}}</h3>
-    <div class="border border-gray" style="height: 80%; overflow: scroll;">
+    <div class="border border-gray" #chatScroll id="chat-scroll" style="height: 80%; overflow: scroll;">
         <div>
             <div class="bg-white" *ngFor="let message of chatMessages" style="margin: 5px; padding: 5px">
                 <strong>{{message.fromUserID == userId ? 'You' : message.fromUser?.name}}</strong> 

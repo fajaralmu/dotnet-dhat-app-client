@@ -1,7 +1,7 @@
 import { HttpHeaders } from "@angular/common/http";
 
-const REQ_ID_KEY:string = "RENT_REQ_ID_KEY";
-const LOGIN_KEY:string = "RENT_LOGIN_KEY";
+const REQ_ID_KEY:string = "CHAT_APPS_REQ_ID_KEY";
+const LOGIN_KEY:string = "CHAT_APPS_LOGIN_KEY";
 export const getHost  = () => {
     return "http://127.0.0.1:5000/";
     // return "http://127.0.0.1:8080/medicalinventory/";
@@ -61,4 +61,8 @@ const getCookie = function (cname:string) {
 
 export const setRequestId = (val:string | undefined) =>  {
     setCookie(REQ_ID_KEY, val);
+}
+
+export const getRequestId = () => {
+    return getCookie(REQ_ID_KEY);
 }
